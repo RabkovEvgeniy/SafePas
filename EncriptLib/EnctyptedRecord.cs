@@ -4,14 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EncriptLib
+namespace EncryptLib
 {
     public class EncryptedRecord
     {
-        public string Value { get; private set; }
-        public bool isEncrypted{ get; private set; }
-        // public Id KeyID { get; private set; }
-        // public void Encrypt(Key key) { };
+        public string Value {get; private set;}
+        public bool isEncrypted{get; private set;}
+        
+        public Guid KeyID {get; private set;}
+        public void Encrypt(EncryptionKey key) 
+        {
+            throw new NotImplementedException();
+        }
 
     }
 }
