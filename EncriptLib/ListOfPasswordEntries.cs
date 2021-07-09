@@ -44,7 +44,7 @@ namespace EncryptLib
         
         PasswordEntryModel this[int i] 
         {
-            get => _passwordEntries[i]; 
+            get => (PasswordEntryModel)_passwordEntries[i].Clone(); 
         }
 
         /// <summary>

@@ -16,7 +16,7 @@ namespace EncryptLib
         /// <param name="value">Шифруемое значение</param>
         public EncryptedRecord(string value) 
         {
-            this.Value = (string)Value.Clone();
+            Value = (string)value.Clone();
         }
 
         /// <summary>
@@ -28,8 +28,8 @@ namespace EncryptLib
         /// Значение записи.
         /// </summary>
         public string Value {
-            get => isEncrypted ?"**********": _value;
-            private set =>_value = value;
+            get => isEncrypted ?"**********": (string)_value.Clone();
+            private set =>_value = (string)value.Clone();
         }
         
         /// <summary>
