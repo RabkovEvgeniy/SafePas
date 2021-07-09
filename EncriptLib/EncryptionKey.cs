@@ -19,7 +19,7 @@ namespace EncryptLib
 
             Value = new int[100];
             for (int i = 0; i < 100; i++)
-                Value[i] = random.Next();
+                Value[i] = random.Next(1103);
         }
 
         public Guid Id { get; private set; }

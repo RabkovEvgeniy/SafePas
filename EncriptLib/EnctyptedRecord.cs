@@ -41,31 +41,61 @@ namespace EncryptLib
         /// ID ключа, если значение зашифровано, иначе пустой Guid
         /// </summary>
         public Guid KeyID {get; private set;}
-        
+
         /// <summary>
         /// Зашифровать запись используя ключ key
         /// </summary>
         /// <param name="key">Ключ шифрования</param>
-        public void Encrypt(EncryptionKey key) 
+        /// <returns>Возвращает true в случае успеха, иначе false</returns>
+        public bool Encrypt(EncryptionKey key) 
         {
-            throw new NotImplementedException();
+            char[] encryptedValue = new char[_value.Length];
+            if (!isEncrypted) 
+            {
+                for (int i = 0; i < _value.Length; i++)
+                {
+                    encryptedValue[i] = (char)((_value[i] + key[i]) % 1104);
+                }
+                _value = new string(encryptedValue);
+                
+                KeyID = key.Id;
+                isEncrypted = true;
+                return true;
+            }
+            else return false;
         }
 
         /// <summary>
         /// Расшифровать запись используя ключ key.
         /// </summary>
         /// <param name="key">Ключ шифрования</param>
-        /// <returns>Возвращает true в случае успеха, иначе else</returns>
+        /// <returns>Возвращает true в случае успеха, иначе false</returns>
         public bool Decrypt(EncryptionKey key) 
         {
-            throw new NotImplementedException();
+            char[] decryptedValue = new char[_value.Length];
+            if (isEncrypted && KeyID == key.Id)
+            {
+                for (int i = 0; i < _value.Length; i++)
+                {
+                    if (_value[i] < key[i])
+                        decryptedValue[i] = (char)(1104 + _value[i]- key[i]);
+                    else 
+                        decryptedValue[i] = (char)(_value[i] - key[i]);
+                }
+                _value = new string(decryptedValue);
+
+                KeyID = Guid.Empty;
+                isEncrypted = false;
+                return true;
+            }
+            else return false;
         }
 
         public object Clone()
         {
             return new EncryptedRecord
             {
-                Value = (string)Value.Clone(),
+                Value = (string)_value.Clone(),
                 KeyID = KeyID,
                 isEncrypted = isEncrypted
             };
