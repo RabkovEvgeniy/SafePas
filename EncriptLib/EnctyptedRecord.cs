@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace EncryptLib
 {
-    public class EncryptedRecord
+    public class EncryptedRecord:ICloneable
     {
+        private EncryptedRecord() { }
+        
         /// <summary>
         /// Создает шифруемую запись со значением value
         /// </summary>
@@ -15,17 +17,6 @@ namespace EncryptLib
         public EncryptedRecord(string value) 
         {
             this.Value = (string)Value.Clone();
-        }
-
-        /// <summary>
-        /// Конструктор копирования
-        /// </summary>
-        /// <param name="record">Шифруемая запись</param>
-        public EncryptedRecord(EncryptedRecord record)
-        {
-            this.Value = (string)record.Value.Clone();
-            this.KeyID = record.KeyID;
-            this.isEncrypted = record.isEncrypted;
         }
 
         /// <summary>
@@ -70,5 +61,14 @@ namespace EncryptLib
             throw new NotImplementedException();
         }
 
+        public object Clone()
+        {
+            return new EncryptedRecord
+            {
+                Value = (string)Value.Clone(),
+                KeyID = KeyID,
+                isEncrypted = isEncrypted
+            };
+        }
     }
 }
