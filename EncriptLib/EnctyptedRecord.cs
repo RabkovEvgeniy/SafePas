@@ -8,11 +8,64 @@ namespace EncryptLib
 {
     public class EncryptedRecord
     {
-        public string Value {get; private set;}
+        /// <summary>
+        /// Создает шифруемую запись со значением value
+        /// </summary>
+        /// <param name="value">Шифруемое значение</param>
+        EncryptedRecord(string value) 
+        {
+            this.Value = (string)Value.Clone();
+        }
+
+        /// <summary>
+        /// Конструктор копирования
+        /// </summary>
+        /// <param name="record">Шифруемая запись</param>
+        EncryptedRecord(EncryptedRecord record)
+        {
+            this.Value = (string)record.Value.Clone();
+            this.KeyID = record.KeyID;
+            this.isEncrypted = record.isEncrypted;
+        }
+
+        /// <summary>
+        /// Строковое представление шифруемой записи.
+        /// </summary>
+        private string _value;
+        
+        /// <summary>
+        /// Значение записи.
+        /// </summary>
+        public string Value {
+            get => isEncrypted ?"**********": _value;
+            private set =>_value = value;
+        }
+        
+        /// <summary>
+        /// Зашифровано ли значение.
+        /// </summary>
         public bool isEncrypted{get; private set;}
         
+        /// <summary>
+        /// ID ключа, если значение зашифровано, иначе пустой Guid
+        /// </summary>
         public Guid KeyID {get; private set;}
+        
+        /// <summary>
+        /// Зашифровать запись используя ключ key
+        /// </summary>
+        /// <param name="key">Ключ шифрования</param>
         public void Encrypt(EncryptionKey key) 
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Расшифровать запись используя ключ key.
+        /// </summary>
+        /// <param name="key">Ключ шифрования</param>
+        /// <returns>Возвращает true в случае успеха, иначе else</returns>
+        public bool Decrypt(EncryptionKey key) 
         {
             throw new NotImplementedException();
         }

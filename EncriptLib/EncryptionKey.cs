@@ -16,7 +16,7 @@ namespace EncryptLib
         EncryptionKey(Random random)
         {
             Id = Guid.NewGuid();
-            
+
             Value = new int[100];
             for (int i = 0; i < 100; i++)
                 Value[i] = random.Next();
