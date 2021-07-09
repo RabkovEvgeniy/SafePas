@@ -9,12 +9,12 @@ namespace EncryptLib
     class ListOfPasswordEntries
     {
         /// <summary>
-        /// Статический генератор случайных чисел
+        /// Статический генератор случайных чисел.
         /// </summary>
         private static Random _random;
 
         /// <summary>
-        /// 
+        /// Инициализирует статический генератор случайных чисел.
         /// </summary>
         static ListOfPasswordEntries() => _random = new Random();
 

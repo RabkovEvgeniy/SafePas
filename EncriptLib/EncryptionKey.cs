@@ -8,11 +8,25 @@ namespace EncryptLib
 {
     public class EncryptionKey
     {
+        const string LenthErrorMassage = "В переданном для иницализации ключа массиве не 100 эллементов";
+        const string ValueErrorMassage = "В переданном для иницализации ключа массиве содержатся" +
+            " эллементы, не входящие в диапазон 0..1103 включительно";
+
+        /// <summary>
+        /// Конструктор для создания ключа шифрования.
+        /// </summary>
+        /// <param name="id">ID ключа</param>
+        /// <param name="Value">Ключ,массив целых чисел на 100 эллементов
+        /// со значениями 0..1103 включительно</param>
         public EncryptionKey(Guid id, int[] Value) 
         {
             Id = id;
+            if (Value.Length != 100) throw new Exception(LenthErrorMassage);
+
+            if(!Value.All<int>(i=>i>=0&&i<=1103)) throw new Exception(ValueErrorMassage);
             this.Value = (int[])Value.Clone(); 
         }
+        
         public EncryptionKey(Random random)
         {
             Id = Guid.NewGuid();
