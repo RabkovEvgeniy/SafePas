@@ -12,7 +12,7 @@ namespace EncryptLib
         /// Создает шифруемую запись со значением value
         /// </summary>
         /// <param name="value">Шифруемое значение</param>
-        EncryptedRecord(string value) 
+        public EncryptedRecord(string value) 
         {
             this.Value = (string)Value.Clone();
         }
@@ -21,7 +21,7 @@ namespace EncryptLib
         /// Конструктор копирования
         /// </summary>
         /// <param name="record">Шифруемая запись</param>
-        EncryptedRecord(EncryptedRecord record)
+        public EncryptedRecord(EncryptedRecord record)
         {
             this.Value = (string)record.Value.Clone();
             this.KeyID = record.KeyID;

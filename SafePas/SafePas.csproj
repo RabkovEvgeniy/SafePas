@@ -49,5 +49,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EncriptLib\EncryptLib.csproj">
+      <Project>{16515341-5741-4a40-ad3a-bcfab7d8773a}</Project>
+      <Name>EncryptLib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

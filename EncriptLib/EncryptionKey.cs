@@ -8,12 +8,12 @@ namespace EncryptLib
 {
     public class EncryptionKey
     {
-        EncryptionKey(Guid id, int[] Value) 
+        public EncryptionKey(Guid id, int[] Value) 
         {
             Id = id;
             this.Value = (int[])Value.Clone(); 
         }
-        EncryptionKey(Random random)
+        public EncryptionKey(Random random)
         {
             Id = Guid.NewGuid();
 
