@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace EncryptLib
 {
-    internal static class Encoder
+    public static class Encoder
     {   
         public static string Encrypt(string value, EncryptionKey key) 
         {

@@ -8,7 +8,6 @@ namespace EncryptLib
 {
     class ListOfPasswordEntries
     {
-
         private static Random _random = new Random();
 
         private List<PasswordEntryModel> _passwordEntries;

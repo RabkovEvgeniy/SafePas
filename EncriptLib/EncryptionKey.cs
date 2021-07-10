@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace EncryptLib
 {
     [Serializable]
-    internal class EncryptionKey
+    public class EncryptionKey
     {
         [NonSerialized]
         static readonly string SizeOfSetValueArrayError = "Переданный для установки значения ключа массив " +
