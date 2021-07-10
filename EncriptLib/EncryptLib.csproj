@@ -44,7 +44,7 @@
     <Compile Include="PasswordEntryModel.cs" />
     <Compile Include="ListOfPasswordEntries.cs" />
     <Compile Include="EncryptionKey.cs" />
-    <Compile Include="EnctyptedRecord.cs" />
+    <Compile Include="Encoder.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

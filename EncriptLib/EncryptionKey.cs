@@ -6,46 +6,39 @@ using System.Threading.Tasks;
 
 namespace EncryptLib
 {
-    public class EncryptionKey
+    [Serializable]
+    internal class EncryptionKey
     {
-        const string LenthErrorMassage = "В переданном для иницализации ключа массиве не 100 эллементов";
-        const string ValueErrorMassage = "В переданном для иницализации ключа массиве содержатся" +
-            " эллементы, не входящие в диапазон 0..1103 включительно";
-
-        /// <summary>
-        /// Конструктор для создания ключа шифрования.
-        /// </summary>
-        /// <param name="id">ID ключа</param>
-        /// <param name="Value">Ключ,массив целых чисел на 100 эллементов
-        /// со значениями 0..1103 включительно</param>
-        public EncryptionKey(Guid id, int[] Value) 
-        {
-            Id = id;
-            if (Value.Length != 100) throw new Exception(LenthErrorMassage);
-
-            if(!Value.All<int>(i=>i>=0&&i<=1103)) throw new Exception(ValueErrorMassage);
-            this.Value = (int[])Value.Clone(); 
-        }
+        [NonSerialized]
+        static readonly string SizeOfSetValueArrayError = "Переданный для установки значения ключа массив " +
+            "хранит не 100 элементов";
         
-        public EncryptionKey(Random random)
+        [NonSerialized]
+        private static readonly string SetValueError = "Элементы переданного для установки значения " +
+            "ключа массива, не лежат в диапозоне 0..1103";
+        
+        private int[] _value;
+        public int[] Value 
         {
-            Id = Guid.NewGuid();
-
-            Value = new int[100];
-            for (int i = 0; i < 100; i++)
-                Value[i] = random.Next(1103);
-        }
-
-        public Guid Id { get; private set; }
-
-        private int[] Value;
-
-        public int this[int a]
-        {
-            get
+            get => (int[])_value.Clone();
+            
+            set 
             {
-                return Value[a % 100];
-            }
+                if (value.Length != 100) throw new Exception(SizeOfSetValueArrayError);
+                if (!value.All(i => i >= 0 && i <= 1103)) throw new Exception(SetValueError);
+                
+                _value = (int[])value.Clone();
+            } 
+        }
+        public static EncryptionKey GetRandomEncryptionKey(Random random)
+        {
+            EncryptionKey key = new EncryptionKey();
+
+            key.Value = new int[100];
+            for (int i = 0; i < 100; i++)
+                key.Value[i] = random.Next(1103);
+
+            return key;
         }
     }
 }
