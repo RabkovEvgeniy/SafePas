@@ -16,12 +16,13 @@ namespace EncryptLib
         [NonSerialized]
         private static readonly string SetValueError = "Элементы переданного для установки значения " +
             "ключа массива, не лежат в диапозоне 0..1103";
-
+        [NonSerialized]
         private static readonly string AttemptGetValueUninitializedKey = "Была произведена попытка " +
             "получить значении неинициализированного ключа";
 
 
         private int[] _value;
+        
         public int[] Value 
         {
             get

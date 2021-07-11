@@ -1,4 +1,6 @@
 ﻿using System;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,7 +26,6 @@ namespace EncryptLib
         {
             get => _passwordEntries.Count;
         }
-
         PasswordEntryModel this[int i] => _passwordEntries[i];
 
         public void AddPasswordEntry(string URI, string userName, string password, string comment)
@@ -39,19 +40,45 @@ namespace EncryptLib
         }
         public void RemovePasswordEntry(int index) => _passwordEntries.RemoveAt(index);
 
-        public void ReadPasswordList(string path) 
+        public void ClearAndReadPasswordList(string pathToFile) 
         {
-            throw new NotImplementedException();
+            FileInfo file = new FileInfo(pathToFile);
+
+            if (!file.Exists) throw new Exception();
+            if (file.Extension!="pas") throw new Exception();
+            
+            BinaryFormatter formatter = new BinaryFormatter();
+            
+            using (FileStream fs = file.Open(FileMode.Open)) 
+            {
+                _passwordEntries = (List<PasswordEntryModel>)formatter.Deserialize(fs);       
+            }
         }
 
-        public void ReadEncryptionKeyList(string path)
+        public void ClearAndReadEncryptionKeyList(string pathToFile)
         {
-            throw new NotImplementedException();
+            FileInfo file = new FileInfo(pathToFile);
+
+            if (!file.Exists) throw new Exception();
+            if (file.Extension != "key") throw new Exception();
+
+            BinaryFormatter formatter = new BinaryFormatter();
+
+            using (FileStream fs = file.Open(FileMode.Open))
+            {
+                _encryptionKeys = (List<EncryptionKey>)formatter.Deserialize(fs);
+            }
         }
 
-        public void WritePasswordList(string passwordListPath, string encryptionKeyListPath) 
+        public void EncryptAndWritePasswordList(string passwordListPath, string encryptionKeyListPath) 
         {
-            throw new NotImplementedException();
+            BinaryFormatter formatter = new BinaryFormatter();
+            using (FileStream passwordsFS = new FileStream($"{passwordListPath}\\passwords.pas", FileMode.Create))
+            using (FileStream keysFS = new FileStream($"{encryptionKeyListPath}\\keys.key", FileMode.Create))
+            {
+                formatter.Serialize(passwordsFS, _passwordEntries);
+                formatter.Serialize(keysFS, _encryptionKeys);
+            }
         }
     }
 }
