@@ -24,11 +24,8 @@ namespace EncryptLib
         {
             get => _passwordEntries.Count;
         }
-        
-        PasswordEntryModel this[int i] 
-        {
-            get => (PasswordEntryModel)_passwordEntries[i].Clone(); 
-        }
+
+        PasswordEntryModel this[int i] => _passwordEntries[i];
 
         public void AddPasswordEntry(string URI, string userName, string password, string comment)
         {
@@ -40,6 +37,7 @@ namespace EncryptLib
                 Comment = comment
             });
         }
+        public void RemovePasswordEntry(int index) => _passwordEntries.RemoveAt(index);
 
         public void ReadPasswordList(string path) 
         {

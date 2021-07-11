@@ -16,12 +16,20 @@ namespace EncryptLib
         [NonSerialized]
         private static readonly string SetValueError = "Элементы переданного для установки значения " +
             "ключа массива, не лежат в диапозоне 0..1103";
-        
+
+        private static readonly string AttemptGetValueUninitializedKey = "Была произведена попытка " +
+            "получить значении неинициализированного ключа";
+
+
         private int[] _value;
         public int[] Value 
         {
-            get => (int[])_value.Clone();
-            
+            get
+            {
+                if (_value == null) throw new Exception(AttemptGetValueUninitializedKey);
+                return (int[])_value.Clone();
+            }
+
             set 
             {
                 if (value.Length != 100) throw new Exception(SizeOfSetValueArrayError);
@@ -32,13 +40,11 @@ namespace EncryptLib
         }
         public static EncryptionKey GetRandomEncryptionKey(Random random)
         {
-            EncryptionKey key = new EncryptionKey();
-
-            key.Value = new int[100];
+            int[] Value = new int[100];
             for (int i = 0; i < 100; i++)
-                key.Value[i] = random.Next(1103);
+                Value[i] = random.Next(1103);
 
-            return key;
+            return new EncryptionKey() {Value = Value};
         }
     }
 }
