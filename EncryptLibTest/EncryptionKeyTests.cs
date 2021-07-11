@@ -67,11 +67,46 @@ namespace EncryptLibTest
                 nonValidSizeKeyValueException = true;
             }
 
-            //Arrange
+            //Assert
             Assert.IsFalse(minNormalKeyValueException);
             Assert.IsFalse(maxNormalKeyValueException);
             Assert.IsTrue(nonValidNormalKeyValueException);
             Assert.IsTrue(nonValidSizeKeyValueException);
+        }
+
+        [TestMethod]
+        public void ValueGetTest()
+        {
+            //Arrange
+            Random random = new Random();
+            EncryptionKey emptyKey = new EncryptionKey();
+            EncryptionKey randomKey = EncryptionKey.GetRandomEncryptionKey(random);
+
+            bool getEmptyKeyException = false;
+            bool getRandomKeyException = false;
+
+            //Act
+            try
+            {
+                var obj1 = emptyKey.Value;
+            }
+            catch (Exception)
+            {
+                getEmptyKeyException = true;
+            }
+
+            try
+            {
+                var obj2 = randomKey.Value;
+            }
+            catch (Exception)
+            {
+                getRandomKeyException = true;
+            }
+
+            //Assert
+            Assert.IsFalse(getRandomKeyException);
+            Assert.IsTrue(getEmptyKeyException);
         }
     }
 }

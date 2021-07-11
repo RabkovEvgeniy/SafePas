@@ -40,13 +40,11 @@ namespace EncryptLib
         }
         public static EncryptionKey GetRandomEncryptionKey(Random random)
         {
-            EncryptionKey key = new EncryptionKey();
-
-            key.Value = new int[100];
+            int[] Value = new int[100];
             for (int i = 0; i < 100; i++)
-                key.Value[i] = random.Next(1103);
+                Value[i] = random.Next(1103);
 
-            return key;
+            return new EncryptionKey() {Value = Value};
         }
     }
 }
